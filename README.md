@@ -24,8 +24,8 @@ The **log files (.txt)** are just the raw logging output of nodes.  There are th
 
 - The `1494298887.2` is server time, in seconds.
 - `asn-0.575016` is the ASN slot number, in the 5 byte hex notation.
-- `drift -65` is the drift estimate of the sensor node. It's printed in custom units (1/1024 of a microsecond). It is only printed after its updated, and it's only updated on synchronization events.
-- `dr -2 (-24562), edr 2 (24562)` shows that EB packet was received and used for synchronization.  `24562` is the corrected synchronization error, in 1/1024 of a microsecond. Time correction also triggers update of the `drift` value (which was already printed, in the line before this one).
+- `drift -65` is the drift estimate of the sensor node, printed in ppm (parts per million) multiplied by 1024. I.e. `-65` is approximately `0.065` parts per million. It is only printed after its updated, and it's only updated on synchronization events.
+- `dr -2 (-24562), edr 2 (24562)` shows that EB packet was received and used for synchronization.  `24562` is the corrected synchronization error. It is printed custom units, 1/1024 of a microsecond. Time correction also triggers update of the `drift` value (which was already printed, in the line before this one). `-2` is also the corrected synchronization error, but using rtimer ticks timing. It can be ignored when the more accurate estimate in brackets is available. (There are 5^6 = 15625 units per rtimer tick. `-24562 / 15625 = -1.57`, which when rounded to integer gives -2).
 - `edr 1 (-299)` shows that EB packet was received, but not used for syncronization. `-299` is the estimated error.
 
 In the experiment, beacons were sent around once per second, but sync only once per several minutes (at least after the initial learning period). So we have few synchronization events, definitely much less than temperature sensing events.
